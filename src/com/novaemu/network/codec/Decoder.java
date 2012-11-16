@@ -13,6 +13,8 @@ public class Decoder extends FrameDecoder {
 	protected Object decode(ChannelHandlerContext Context, Channel channel,
 			ChannelBuffer buffer) throws Exception {
 
+		Logging.Write("accepted habbo packet..");
+		
 		if (buffer.readableBytes() < 6)
 			return null;
 		
@@ -32,8 +34,7 @@ public class Decoder extends FrameDecoder {
 		}
 		else
 		{
-			// Packet handling..
-			channel.write("BKLol! :D" + (char)1);
+			Logging.Write("accepted habbo packet..");
 		}
 
 		return null;

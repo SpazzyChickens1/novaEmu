@@ -5,8 +5,6 @@ import java.util.concurrent.ConcurrentMap;
 
 import org.jboss.netty.channel.Channel;
 
-import com.novaemu.utils.Logging;
-
 public class SessionManager {
 
 	private ConcurrentMap<Integer, Session> Sessions;
