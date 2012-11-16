@@ -11,6 +11,7 @@ import org.jboss.netty.channel.socket.nio.NioServerSocketChannelFactory;
 import com.novaemu.network.ClientHandler;
 import com.novaemu.network.codec.Decoder;
 import com.novaemu.network.codec.Encoder;
+import com.novaemu.protocol.MessageHandler;
 import com.novaemu.sessions.SessionManager;
 
 public class NovaServer {
@@ -20,7 +21,8 @@ public class NovaServer {
 
 	public SessionManager sessionManager;
 	
-
+	public MessageHandler messageHandler;
+	
 	public String IP;
 	public int Port;
 	
@@ -42,6 +44,7 @@ public class NovaServer {
 	public void startUp() {
 		
 		this.sessionManager = new SessionManager();
+		this.messageHandler = new MessageHandler();
 	}
 	
 	public void configureNetty()
@@ -61,6 +64,10 @@ public class NovaServer {
 			return false;
 		}
 		return true;
+	}
+	
+	public MessageHandler getMessages() {
+		return this.messageHandler;
 	}
 	
 	public SessionManager getSessionManager() {

@@ -7,6 +7,7 @@ import org.jboss.netty.channel.MessageEvent;
 import org.jboss.netty.channel.SimpleChannelHandler;
 import com.novaemu.novaEmu;
 import com.novaemu.sessions.Session;
+import com.novaemu.utils.ClientMessage;
 import com.novaemu.utils.Logging;
 
 public class ClientHandler extends SimpleChannelHandler {
@@ -33,9 +34,11 @@ public class ClientHandler extends SimpleChannelHandler {
 	@Override
 	public void messageReceived(ChannelHandlerContext ctx, MessageEvent e) {
 		
+		ClientMessage msg = (ClientMessage) e.getMessage();
+		
 		Session session = (Session)ctx.getAttachment();
 		
-		Logging.Write("Recieved message from " + session.getChannel().getRemoteAddress().toString());
+		novaEmu.getServer().getMessages().handlePacket(msg, session);
 		
 	}
 	

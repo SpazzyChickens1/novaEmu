@@ -14,18 +14,19 @@ public class SessionManager {
 		this.setSessions(new ConcurrentHashMap<Integer, Session>());
 	}
 
-	public boolean addSession(Channel channel) {
-		
-		Session clientSession = new Session(channel);
-		
-		if(this.getSessions().put(channel.getId(), clientSession) != null) {
-			
+	public boolean addSession(final Channel channel) {
+
+		try {
+			final Session clientSession = new Session(channel);
+
+			this.getSessions().put(channel.getId(), clientSession);
+
 			channel.setAttachment(clientSession);
-			
+
 			return true;
+		} catch (final Exception e) {
+			return false;
 		}
-		
-		return false;
 	}
 	
 	public void removeSession(Channel channel) {
