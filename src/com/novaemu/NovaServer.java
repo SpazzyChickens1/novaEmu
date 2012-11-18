@@ -1,6 +1,7 @@
 package com.novaemu;
 
 import java.net.InetSocketAddress;
+import java.util.Properties;
 import java.util.concurrent.Executors;
 
 import org.jboss.netty.bootstrap.ServerBootstrap;
@@ -13,6 +14,8 @@ import com.novaemu.network.codec.Decoder;
 import com.novaemu.network.codec.Encoder;
 import com.novaemu.protocol.MessageHandler;
 import com.novaemu.sessions.SessionManager;
+import com.novaemu.storage.StorageManager;
+import com.novaemu.utils.Logging;
 
 public class NovaServer {
 
@@ -26,10 +29,14 @@ public class NovaServer {
 	public String IP;
 	public int Port;
 	
-	public NovaServer(String ip, int port)
+	public Properties config;
+	private StorageManager storageManager;
+	
+	public NovaServer(Properties config)
 	{		
-		this.IP = ip;
-		this.Port = port;
+		this.config = config;
+		this.IP = config.getProperty("game.host");
+		this.Port = Integer.parseInt(config.getProperty("game.port"));
 		
 		this.channelFactory = new NioServerSocketChannelFactory(
 				Executors.newCachedThreadPool(),
@@ -44,7 +51,11 @@ public class NovaServer {
 	public void startUp() {
 		
 		this.sessionManager = new SessionManager();
+		
 		this.messageHandler = new MessageHandler();
+		
+		this.storageManager = new StorageManager("jdbc:mysql://" +  config.getProperty("mysql.host") +"/" + config.getProperty("mysql.database"), config.getProperty("mysql.username"), config.getProperty("mysql.password"));
+		Logging.Write("MySQL database connection has been made.");
 	}
 	
 	public void configureNetty()
@@ -72,5 +83,9 @@ public class NovaServer {
 	
 	public SessionManager getSessionManager() {
 		return this.sessionManager;
+	}
+
+	public StorageManager getStorage() {
+		return storageManager;
 	}
 }

@@ -29,7 +29,7 @@ public class novaEmu {
 		config = new Properties();
 		getConfig().load(inputStream);
 		
-		novaServer = new NovaServer(getConfig().getProperty("game.host"), Integer.parseInt(getConfig().getProperty("game.port")));
+		novaServer = new NovaServer(getConfig());
 
 		getServer().configureNetty();
 		
@@ -40,6 +40,15 @@ public class novaEmu {
 		} else {
 			Logging.Fatal("Failed to start the server, make sure port " + getServer().Port + " isn't already in use!");
 		}
+	}
+	
+	public static String filter(String str) {
+		str = str.replace((char) 1, ' ');
+		str = str.replace((char) 2, ' ');
+		str = str.replace((char) 3, ' ');
+		str = str.replace((char) 9, ' ');
+		
+		return str;
 	}
 	
 	public static NovaServer getServer() {

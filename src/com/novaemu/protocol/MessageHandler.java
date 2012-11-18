@@ -2,6 +2,7 @@ package com.novaemu.protocol;
 
 import com.novaemu.protocol.composers.Incoming;
 import com.novaemu.protocol.handshake.InitCryptoMessageEvent;
+import com.novaemu.protocol.handshake.SSOTicketMessageEvent;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -22,22 +23,22 @@ public class MessageHandler {
 	
 	public void registerPackets() {
 		
+		// Handshake message events
 		this.getEvents().put(Incoming.InitCryptoMessageEvent, new InitCryptoMessageEvent());
+		this.getEvents().put(Incoming.SSOTicketMessageEvent, new SSOTicketMessageEvent());
 
 	}
 	
 	public void handlePacket(ClientMessage msg, Session session) {
 		
 		if(getEvents().containsKey(msg.getType())) {
-						
-			Logging.Write("Handled packet -> [" + Incoming.valueOfId(msg.getType()) + "][" + msg.getHeader() + "]");
-
+			if(msg.getHeader() != "D{")
+				Logging.Write("Handled packet -> [" + Incoming.valueOfId(msg.getType()) + "][" + msg.getHeader() + "]");
+			
 			getEvents().get(msg.getType()).run(msg, session);
-			
 		} else {
-			
-			Logging.Fatal("Unhandled packet -> [" + Incoming.valueOfId(msg.getType()) + "][" + msg.getHeader() + "]");
-
+			if(msg.getHeader() != "D{")
+				Logging.Write("Unhandled packet -> [" + Incoming.valueOfId(msg.getType()) + "][" + msg.getHeader() + "]");
 		}
 	}
 	

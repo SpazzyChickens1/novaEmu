@@ -11,10 +11,9 @@ public class InitCryptoMessageEvent implements IMessageEvent {
 	@Override
 	public void run(ClientMessage msg, Session Client) {
 		
-		ServerMessage Response = new ServerMessage(Outgoing.SessionParamsMessageEvent);
-		Response.AppendInt32(0);
-		
-		Client.send(Response);
+		ServerMessage Message = new ServerMessage(Outgoing.SessionParamsMessageComposer);
+        Message.AppendInt32(0);
+		Client.send(Message);
 		
 	}
 

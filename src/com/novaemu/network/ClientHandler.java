@@ -36,7 +36,7 @@ public class ClientHandler extends SimpleChannelHandler {
 		
 		ClientMessage msg = (ClientMessage) e.getMessage();
 		
-		Session session = (Session)ctx.getAttachment();
+		Session session = (Session)ctx.getChannel().getAttachment();
 		
 		novaEmu.getServer().getMessages().handlePacket(msg, session);
 		
