@@ -14,7 +14,6 @@ public class InitCryptoMessageEvent implements IMessageEvent {
 		ServerMessage Message = new ServerMessage(Outgoing.SessionParamsMessageComposer);
         Message.AppendInt32(0);
 		Client.send(Message);
-		
 	}
 
 }

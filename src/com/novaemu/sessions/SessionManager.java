@@ -29,6 +29,19 @@ public class SessionManager {
 		}
 	}
 	
+	public Session getClientByHabbo(int Id) {
+		for(Session client : this.getSessions().values()) {
+			
+			if(client.getPlayer() != null) {
+				if(client.getPlayer().getHabbo().Id == Id) {
+					return client;
+				}
+			}
+			
+		}
+		return null;
+	}
+	
 	public void removeSession(Channel channel) {
 		this.getSessions().remove(channel.getId());
 	}

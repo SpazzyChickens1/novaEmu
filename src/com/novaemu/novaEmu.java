@@ -27,9 +27,9 @@ public class novaEmu {
 		InputStream inputStream = new novaEmu().getClass().getResourceAsStream("/nova.properties");  
 		
 		config = new Properties();
-		getConfig().load(inputStream);
+		config.load(inputStream);
 		
-		novaServer = new NovaServer(getConfig());
+		novaServer = new NovaServer(config);
 
 		getServer().configureNetty();
 		
@@ -53,10 +53,6 @@ public class novaEmu {
 	
 	public static NovaServer getServer() {
 		return novaServer;
-	}
-
-	public static Properties getConfig() {
-		return config;
 	}
 
 }

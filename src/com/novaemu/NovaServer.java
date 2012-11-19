@@ -51,8 +51,10 @@ public class NovaServer {
 	public void startUp() {
 		
 		this.sessionManager = new SessionManager();
+		Logging.Write("Loaded the session manager");
 		
 		this.messageHandler = new MessageHandler();
+		Logging.Write("Loaded " + getMessages().getEvents().size() + " messages!");
 		
 		this.storageManager = new StorageManager("jdbc:mysql://" +  config.getProperty("mysql.host") +"/" + config.getProperty("mysql.database"), config.getProperty("mysql.username"), config.getProperty("mysql.password"));
 		Logging.Write("MySQL database connection has been made.");

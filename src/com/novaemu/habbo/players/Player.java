@@ -11,5 +11,8 @@ public class Player {
 	public Habbo getHabbo() {
 		return this.Habbo;
 	}
-	
+
+	public void onDisconnect() {
+		// save inventory etc..
+	}
 }

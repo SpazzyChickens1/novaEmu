@@ -19,6 +19,11 @@ public class Session {
 		this.getChannel().write(msg);
 	}
 	
+	public void Disconnect() {
+		this.getPlayer().onDisconnect();
+		this.getChannel().disconnect();
+	}
+	
 	public Channel getChannel() {
 		return this.channel;
 	}

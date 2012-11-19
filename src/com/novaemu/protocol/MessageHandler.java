@@ -3,6 +3,11 @@ package com.novaemu.protocol;
 import com.novaemu.protocol.composers.Incoming;
 import com.novaemu.protocol.handshake.InitCryptoMessageEvent;
 import com.novaemu.protocol.handshake.SSOTicketMessageEvent;
+import com.novaemu.protocol.messenger.MessengerInitMessageEvent;
+import com.novaemu.protocol.messenger.SendMsgMessageEvent;
+import com.novaemu.protocol.players.GetCreditsInfoEvent;
+import com.novaemu.protocol.players.InfoRetrieveMessageEvent;
+import com.novaemu.protocol.players.ScrGetUserInfoMessageEvent;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -26,7 +31,16 @@ public class MessageHandler {
 		// Handshake message events
 		this.getEvents().put(Incoming.InitCryptoMessageEvent, new InitCryptoMessageEvent());
 		this.getEvents().put(Incoming.SSOTicketMessageEvent, new SSOTicketMessageEvent());
-
+		
+		// Player message events
+		this.getEvents().put(Incoming.InfoRetrieveMessageEvent, new InfoRetrieveMessageEvent());
+		this.getEvents().put(Incoming.GetCreditsInfoEvent, new GetCreditsInfoEvent());
+		this.getEvents().put(Incoming.ScrGetUserInfoMessageEvent, new ScrGetUserInfoMessageEvent());
+		
+		// Messenger message events
+		this.getEvents().put(Incoming.MessengerInitMessageEvent, new MessengerInitMessageEvent());
+		this.getEvents().put(Incoming.SendMsgMessageEvent, new SendMsgMessageEvent());
+		
 	}
 	
 	public void handlePacket(ClientMessage msg, Session session) {
@@ -37,7 +51,7 @@ public class MessageHandler {
 			
 			getEvents().get(msg.getType()).run(msg, session);
 		} else {
-			if(msg.getHeader() != "D{")
+			if(Incoming.valueOfId(msg.getType()) != "LatencyPingRequestMessageEvent")
 				Logging.Write("Unhandled packet -> [" + Incoming.valueOfId(msg.getType()) + "][" + msg.getHeader() + "]");
 		}
 	}
