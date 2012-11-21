@@ -2,6 +2,7 @@ package com.novaemu;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.sql.SQLException;
 import java.util.Properties;
 
 import com.novaemu.utils.Logging;
@@ -31,6 +32,12 @@ public class novaEmu {
 		
 		novaServer = new NovaServer(config);
 
+		try {
+			getServer().loadCache();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
 		getServer().configureNetty();
 		
 		if(getServer().startServer()) {

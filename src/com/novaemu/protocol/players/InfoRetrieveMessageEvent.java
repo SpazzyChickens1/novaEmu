@@ -11,16 +11,16 @@ public class InfoRetrieveMessageEvent implements IMessageEvent {
 	@Override
 	public void run(ClientMessage msg, Session Client) {
 			int Id = Client.getPlayer().getHabbo().Id;
-	        String Username = Client.getPlayer().getHabbo().Username;
-	        String Figure = Client.getPlayer().getHabbo().Figure;
-	        String Motto = Client.getPlayer().getHabbo().Motto;
-	        String Gender = Client.getPlayer().getHabbo().Gender;
-	        
-	        ServerMessage Response = new ServerMessage(Outgoing.UserObjectComposer);
+			String Username = Client.getPlayer().getHabbo().Username;
+			String Figure = Client.getPlayer().getHabbo().Figure;
+			String Motto = Client.getPlayer().getHabbo().Motto;
+			String Gender = Client.getPlayer().getHabbo().Gender;
+			
+			ServerMessage Response = new ServerMessage(Outgoing.UserObjectComposer);
 	
-	        Response.AppendString(Integer.toString(Id));
-	        Response.AppendStringWithBreak(Username);
-	        Response.AppendStringWithBreak(Figure);
+			Response.AppendString(Integer.toString(Id));
+			Response.AppendStringWithBreak(Username);
+			Response.AppendStringWithBreak(Figure);
 			Response.AppendStringWithBreak(Gender);
 			Response.AppendStringWithBreak(Motto);
 			Response.AppendBoolean(false);
@@ -29,7 +29,7 @@ public class InfoRetrieveMessageEvent implements IMessageEvent {
 			Response.AppendBoolean(false);
 			Response.AppendBoolean(false);
 			Response.AppendBoolean(false);	
-	        
+			
 			Client.send(Response);
 	}
 

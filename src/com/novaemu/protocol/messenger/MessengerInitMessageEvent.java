@@ -28,8 +28,9 @@ public class MessengerInitMessageEvent implements IMessageEvent {
 			Response.AppendInt32(900);
 			Response.AppendBoolean(false);
 			Response.AppendInt32(Player.getHabbo().getMessenger().getFriends().size());
-	        
+			
 			for(Friend friend : Player.getHabbo().getMessenger().getFriends().values()) {
+				
 				ResultSet User = novaEmu.getServer().getStorage().readRow("SELECT * FROM users WHERE id = " + friend.Id);
 				
 				Boolean online;
@@ -50,8 +51,8 @@ public class MessengerInitMessageEvent implements IMessageEvent {
 				Response.AppendStringWithBreak(User.getString("motto"));
 			
 				Response.AppendStringWithBreak("1-1-2012");
-	            Response.AppendStringWithBreak("");
-	            Response.AppendStringWithBreak("");
+				Response.AppendStringWithBreak("");
+				Response.AppendStringWithBreak("");
 			}
 			
 			Response.AppendInt32(100);

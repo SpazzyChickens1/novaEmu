@@ -12,7 +12,7 @@ public class InitCryptoMessageEvent implements IMessageEvent {
 	public void run(ClientMessage msg, Session Client) {
 		
 		ServerMessage Message = new ServerMessage(Outgoing.SessionParamsMessageComposer);
-        Message.AppendInt32(0);
+		Message.AppendInt32(0);
 		Client.send(Message);
 	}
 

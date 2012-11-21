@@ -13,11 +13,11 @@ public class ScrGetUserInfoMessageEvent implements IMessageEvent {
 		
 			ServerMessage Message = new ServerMessage(Outgoing.ScrSendUserInfoComposer);
 		
-            Message.AppendStringWithBreak(msg.popFixedString());
-            Message.AppendInt32(0);
-            Message.AppendInt32(0);
-            Message.AppendInt32(0);
-            Message.AppendBoolean(true);
+			Message.AppendStringWithBreak(msg.popFixedString());
+			Message.AppendInt32(0);
+			Message.AppendInt32(0);
+			Message.AppendInt32(0);
+			Message.AppendBoolean(true);
 
 			Client.send(Message);
 

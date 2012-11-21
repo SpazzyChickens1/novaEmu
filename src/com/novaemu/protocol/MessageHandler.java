@@ -5,6 +5,9 @@ import com.novaemu.protocol.handshake.InitCryptoMessageEvent;
 import com.novaemu.protocol.handshake.SSOTicketMessageEvent;
 import com.novaemu.protocol.messenger.MessengerInitMessageEvent;
 import com.novaemu.protocol.messenger.SendMsgMessageEvent;
+import com.novaemu.protocol.navigator.GetUserFlatCatsMessageEvent;
+import com.novaemu.protocol.navigator.MyRoomsSearchMessageEvent;
+import com.novaemu.protocol.navigator.RoomTextSearchMessageEvent;
 import com.novaemu.protocol.players.GetCreditsInfoEvent;
 import com.novaemu.protocol.players.InfoRetrieveMessageEvent;
 import com.novaemu.protocol.players.ScrGetUserInfoMessageEvent;
@@ -41,15 +44,25 @@ public class MessageHandler {
 		this.getEvents().put(Incoming.MessengerInitMessageEvent, new MessengerInitMessageEvent());
 		this.getEvents().put(Incoming.SendMsgMessageEvent, new SendMsgMessageEvent());
 		
+		// Navigator message events
+		this.getEvents().put(Incoming.GetUserFlatCatsMessageEvent, new GetUserFlatCatsMessageEvent());
+		this.getEvents().put(Incoming.MyRoomsSearchMessageEvent, new MyRoomsSearchMessageEvent());
+		this.getEvents().put(Incoming.RoomTextSearchMessageEvent, new RoomTextSearchMessageEvent());
 	}
 	
 	public void handlePacket(ClientMessage msg, Session session) {
 		
 		if(getEvents().containsKey(msg.getType())) {
-			if(msg.getHeader() != "D{")
+			if(msg.getHeader() != "D{") {
 				Logging.Write("Handled packet -> [" + Incoming.valueOfId(msg.getType()) + "][" + msg.getHeader() + "]");
 			
-			getEvents().get(msg.getType()).run(msg, session);
+				try {
+					
+					getEvents().get(msg.getType()).run(msg, session);
+				} catch(Exception e) {
+					e.printStackTrace();
+				}
+			}
 		} else {
 			if(Incoming.valueOfId(msg.getType()) != "LatencyPingRequestMessageEvent")
 				Logging.Write("Unhandled packet -> [" + Incoming.valueOfId(msg.getType()) + "][" + msg.getHeader() + "]");

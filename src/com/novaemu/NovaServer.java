@@ -1,6 +1,7 @@
 package com.novaemu;
 
 import java.net.InetSocketAddress;
+import java.sql.SQLException;
 import java.util.Properties;
 import java.util.concurrent.Executors;
 
@@ -9,6 +10,8 @@ import org.jboss.netty.channel.ChannelException;
 import org.jboss.netty.channel.ChannelPipeline;
 import org.jboss.netty.channel.socket.nio.NioServerSocketChannelFactory;
 
+import com.novaemu.habbo.navigator.Navigator;
+import com.novaemu.habbo.rooms.RoomManager;
 import com.novaemu.network.ClientHandler;
 import com.novaemu.network.codec.Decoder;
 import com.novaemu.network.codec.Encoder;
@@ -31,6 +34,9 @@ public class NovaServer {
 	
 	public Properties config;
 	private StorageManager storageManager;
+	
+	public Navigator navigator;
+	public RoomManager rooms;
 	
 	public NovaServer(Properties config)
 	{		
@@ -60,6 +66,15 @@ public class NovaServer {
 		Logging.Write("MySQL database connection has been made.");
 	}
 	
+	public void loadCache() throws SQLException {
+		this.navigator = new Navigator();
+		Logging.Write("Loaded " + getNavigator().getPrivateCategories().size() + " private room categories.");
+		
+		this.rooms = new RoomManager();
+		Logging.Write("Loaded room manager.");
+		
+	}
+	
 	public void configureNetty()
 	{
 		ChannelPipeline pipeline = this.serverBootstrap.getPipeline();
@@ -83,10 +98,18 @@ public class NovaServer {
 		return this.messageHandler;
 	}
 	
+	public RoomManager getRooms() {
+		return this.rooms;
+	}
+	
 	public SessionManager getSessionManager() {
 		return this.sessionManager;
 	}
 
+	public Navigator getNavigator() {
+		return navigator;
+	}
+	
 	public StorageManager getStorage() {
 		return storageManager;
 	}

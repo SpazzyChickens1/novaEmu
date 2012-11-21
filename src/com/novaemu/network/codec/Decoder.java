@@ -40,9 +40,7 @@ public class Decoder extends FrameDecoder {
 
 			ChannelBuffer msg = buffer.readBytes(msgLen);
 
-			byte[] msgIdBytes = msg.readBytes(2).array();
-
-			int msgId = B64Encoding.DecodeInt32(msgIdBytes);
+			int msgId = B64Encoding.DecodeInt32(msg.readBytes(2).array());
 
 			return new ClientMessage(msgId, msg);
 		}
