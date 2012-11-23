@@ -3,7 +3,6 @@ package com.novaemu.sessions;
 import org.jboss.netty.channel.Channel;
 
 import com.novaemu.habbo.players.Player;
-import com.novaemu.protocol.composers.Outgoing;
 import com.novaemu.utils.ServerMessage;
 
 public class Session {
@@ -28,10 +27,11 @@ public class Session {
 		return this.channel;
 	}
 
+	
 	public void sendAlert(String string) {
-		ServerMessage alert = new ServerMessage(Outgoing.HabboBroadcastMessageComposer);
+		ServerMessage alert = new ServerMessage(808);
+		alert.AppendStringWithBreak("Message from Hotel Management");
 		alert.AppendString(string);
-		
 		this.send(alert);
 	}
 

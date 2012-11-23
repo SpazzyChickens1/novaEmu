@@ -1,5 +1,7 @@
 package com.novaemu.protocol;
 
+import com.novaemu.protocol.catalog.GetCatalogIndexEvent;
+import com.novaemu.protocol.catalog.GetCatalogPageEvent;
 import com.novaemu.protocol.composers.Incoming;
 import com.novaemu.protocol.handshake.InitCryptoMessageEvent;
 import com.novaemu.protocol.handshake.SSOTicketMessageEvent;
@@ -48,6 +50,10 @@ public class MessageHandler {
 		this.getEvents().put(Incoming.GetUserFlatCatsMessageEvent, new GetUserFlatCatsMessageEvent());
 		this.getEvents().put(Incoming.MyRoomsSearchMessageEvent, new MyRoomsSearchMessageEvent());
 		this.getEvents().put(Incoming.RoomTextSearchMessageEvent, new RoomTextSearchMessageEvent());
+		
+		// Catalog message events
+		this.getEvents().put(Incoming.GetCatalogIndexEvent, new GetCatalogIndexEvent());
+		this.getEvents().put(Incoming.GetCatalogPageEvent, new GetCatalogPageEvent());
 	}
 	
 	public void handlePacket(ClientMessage msg, Session session) {

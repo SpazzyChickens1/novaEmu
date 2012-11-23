@@ -10,6 +10,8 @@ import org.jboss.netty.channel.ChannelException;
 import org.jboss.netty.channel.ChannelPipeline;
 import org.jboss.netty.channel.socket.nio.NioServerSocketChannelFactory;
 
+import com.novaemu.habbo.catalog.CatalogManager;
+import com.novaemu.habbo.items.ItemManager;
 import com.novaemu.habbo.navigator.Navigator;
 import com.novaemu.habbo.rooms.RoomManager;
 import com.novaemu.network.ClientHandler;
@@ -35,8 +37,10 @@ public class NovaServer {
 	public Properties config;
 	private StorageManager storageManager;
 	
-	public Navigator navigator;
-	public RoomManager rooms;
+	private Navigator navigator;
+	private RoomManager rooms;
+	private CatalogManager catalog;
+	private ItemManager items;
 	
 	public NovaServer(Properties config)
 	{		
@@ -71,8 +75,14 @@ public class NovaServer {
 		Logging.Write("Loaded " + getNavigator().getPrivateCategories().size() + " private room categories.");
 		
 		this.rooms = new RoomManager();
-		Logging.Write("Loaded room manager.");
 		
+		this.items = new ItemManager();
+		Logging.Write("Loaded " + getItemManager().items.size() + " item definitions");
+		
+		this.catalog = new CatalogManager();
+		this.getCatalog().loadPages();
+		
+		Logging.Write("Loaded " + getCatalog().getPages().size() + " catalog pages");
 	}
 	
 	public void configureNetty()
@@ -112,5 +122,13 @@ public class NovaServer {
 	
 	public StorageManager getStorage() {
 		return storageManager;
+	}
+	
+	public CatalogManager getCatalog() {
+		return this.catalog;
+	}
+
+	public ItemManager getItemManager() {
+		return this.items;
 	}
 }

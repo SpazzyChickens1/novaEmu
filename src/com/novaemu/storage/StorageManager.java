@@ -7,6 +7,7 @@ import java.sql.Statement;
 import com.jolbox.bonecp.BoneCP;
 import com.jolbox.bonecp.BoneCPConfig;
 import com.mysql.jdbc.PreparedStatement;
+import com.novaemu.utils.Logging;
 
 public class StorageManager {
 
@@ -38,7 +39,7 @@ public class StorageManager {
 			this.driverStatement = getConnection().createStatement();
 			
 		} catch(Exception e) {
-			e.printStackTrace();
+			Logging.Fatal("Failed to connect to the MySQL database, please check the configuration!");
 			System.exit(0);
 		}
 	}
@@ -156,7 +157,8 @@ public class StorageManager {
 	{
 		try 
 		{
-			ResultSet resSet = driverStatement.executeQuery(Query);
+			Statement stmt = getConnection().createStatement();
+			ResultSet resSet = stmt.executeQuery(Query);
 
 			while (resSet.next()) 
 			{
@@ -173,8 +175,11 @@ public class StorageManager {
 	public ResultSet readTable(String Query)
 	{	
 		try
-		{
-			return driverStatement.executeQuery(Query);
+		{	
+			Statement stmt = getConnection().createStatement();
+			ResultSet result = stmt.executeQuery(Query);
+			
+			return result;
 		} 
 		catch (Exception e) 
 		{

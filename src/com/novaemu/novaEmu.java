@@ -47,6 +47,13 @@ public class novaEmu {
 		} else {
 			Logging.Fatal("Failed to start the server, make sure port " + getServer().Port + " isn't already in use!");
 		}
+		
+		Runtime.getRuntime().addShutdownHook(new Thread() {
+		    @Override
+		    public void run() {
+		        System.out.println("System was shutdown");
+		    }
+		});
 	}
 	
 	public static String filter(String str) {

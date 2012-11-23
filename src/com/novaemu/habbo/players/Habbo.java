@@ -19,6 +19,8 @@ public class Habbo {
 	public String Motto;
 	public int Credits;
 	
+	public int Rank;
+	
 	public Boolean Muted;
 	
 	public Session Session;
